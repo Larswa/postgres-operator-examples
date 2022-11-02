@@ -6,20 +6,22 @@ commonLabels:
   app.kubernetes.io/version: 5.2.0
 
 bases:
-- ../crd
-- ../rbac/cluster
-- ../manager
+  - ../crd
+  - ../rbac/cluster
+  - ../manager
 
 images:
-- name: postgres-operator
-  newName: registry.developers.crunchydata.com/crunchydata/postgres-operator
-  newTag: ubi8-5.2.0-0
-- name: postgres-operator-upgrade
-  newName: registry.developers.crunchydata.com/crunchydata/postgres-operator-upgrade
-  newTag: ubi8-5.2.0-0
+  - name: postgres-operator
+    newName: ghcr.io/jelmer/postgres-operator
+    newTag: rocky9-v4.5.0-855-g1b8413409
+    # newName: registry.developers.crunchydata.com/crunchydata/postgres-operator
+    # newTag: ubi8-5.2.0-0
+  - name: postgres-operator-upgrade
+    newName: registry.developers.crunchydata.com/crunchydata/postgres-operator-upgrade
+    newTag: ubi8-5.2.0-0
 
 patchesJson6902:
-- target: { group: apps, version: v1, kind: Deployment, name: pgo }
-  path: selectors.yaml
-- target: { group: apps, version: v1, kind: Deployment, name: pgo-upgrade }
-  path: selectors.yaml
+  - target: { group: apps, version: v1, kind: Deployment, name: pgo }
+    path: selectors.yaml
+  - target: { group: apps, version: v1, kind: Deployment, name: pgo-upgrade }
+    path: selectors.yaml
